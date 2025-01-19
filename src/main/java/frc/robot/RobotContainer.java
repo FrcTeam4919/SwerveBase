@@ -10,10 +10,12 @@ import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.subsystems.DriveTrain;
+import frc.robot.subsystems.Swerve;
 import frc.robot.Constants.DriveConstants;
+import frc.robot.commands.*;
 
 import edu.wpi.first.wpilibj2.command.RunCommand;
 /**
@@ -32,9 +34,9 @@ public class RobotContainer {
 
   
   // subsystem
-  private final DriveTrain m_robotDrive = new DriveTrain();
+  private final Swerve m_robotDrive = new Swerve();
   // joystick 
-  private final CommandJoystick m_StickOfHope = new CommandJoystick(0);
+  private final Joystick m_StickOfHope = new Joystick(0);
 
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -45,12 +47,12 @@ public class RobotContainer {
     //Configure driving default
     m_robotDrive.setDefaultCommand(
       // Forward motion controls x speed (forward), sideways motion controls y speed (sideways).
-        new RunCommand (  
-          () -> m_robotDrive.drive( 
+        new TeleopSwerve (  
+          m_robotDrive, 
           m_StickOfHope.getX(),
           m_StickOfHope.getY(), 
           m_StickOfHope.getZ(),
-          DriveConstants.kTeleField),m_robotDrive)
+          DriveConstants.kTeleField)
                
         );
    
